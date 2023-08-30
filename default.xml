@@ -1,53 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-<!--
-    This branch is a main side branch and is configured to have all project
-    specific rules. When updating this manifest file, please also update the
-    project rule in google3 to ensure new projects get testing.
-    See go/side-branch-testing for details.
--->
-
-  <remote  name="aosp" fetch=".." review="https://android-review.googlesource.com/" />
-  <default revision="main" remote="aosp" sync-j="4" />
-
-  <superproject name="kernel/superproject" remote="aosp" revision="u-boot-mainline"/>
-  <contactinfo bugurl="go/repo-bug" />
-
-  <project path="bootable/libbootloader" name="platform/bootable/libbootloader" />
-  <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" />
-  <project path="build/kernel" name="kernel/build" >
-    <linkfile src="kleaf/bazel.sh" dest="tools/bazel" />
+  <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android-review.googlesource.com/"/>
+  
+  <default remote="aosp" revision="main" sync-j="4"/>
+  
+  <project name="kernel/build" path="build/kernel" revision="b0fedfdcff7d4e8fcb6ec82ac8294e738b78dcbc" upstream="main" dest-branch="main">
+    <linkfile src="kleaf/bazel.sh" dest="tools/bazel"/>
   </project>
-  <project path="external/arm-trusted-firmware" name="platform/external/arm-trusted-firmware" revision="main" />
-  <project path="external/boringssl" name="platform/external/boringssl" />
-  <project path="external/compiler-rt" name="platform/external/compiler-rt" revision="main" />
-  <project path="external/dtc" name="platform/external/dtc" revision="main" />
-  <project path="external/open-dice" name="platform/external/open-dice" />
-  <project path="external/bazel-skylib" name="platform/external/bazel-skylib" />
-  <project path="external/stardoc" name="platform/external/stardoc" />
-  <project path="external/swig" name="platform/external/swig" revision="main" />
-  <project path="external/zlib" name="platform/external/zlib" revision="main" />
-  <project path="u-boot" name="platform/external/u-boot" revision="main">
-    <linkfile src="." dest=".source_date_epoch_dir" />
-    <linkfile src="bazel.WORKSPACE" dest="WORKSPACE" />
+  <project name="kernel/prebuilts/build-tools" path="prebuilts/kernel-build-tools" revision="e905be252a53d20c52bd9e59df3ff8fdd46b9eab" upstream="main" dest-branch="main" clone-depth="1"/>
+  <project name="platform/bootable/libbootloader" path="bootable/libbootloader" revision="c90c3a3f412f3efe1cd95c0e19c2982e14d0ea50" upstream="main" dest-branch="main"/>
+  <project name="platform/build/bazel_common_rules" path="build/bazel_common_rules" revision="ded6ea7ad5198a04053eda26fd59b20950e7100e" upstream="main" dest-branch="main"/>
+  <project name="platform/external/arm-trusted-firmware" path="external/arm-trusted-firmware" revision="80ca19568ba83af105cbd8fc9e32a49adf6ea98e" upstream="main" dest-branch="main"/>
+  <project name="platform/external/bazel-skylib" path="external/bazel-skylib" revision="f998e5dc13c03f0eae9e373263d3afff0932c738" upstream="main" dest-branch="main"/>
+  <project name="platform/external/boringssl" path="external/boringssl" revision="2d73e029a590fff902274f0fc1bbc62086b6ce13" upstream="main" dest-branch="main"/>
+  <project name="platform/external/compiler-rt" path="external/compiler-rt" revision="adebad9c8a6a383836d5fcb4a493ff1bd583b926" upstream="main" dest-branch="main"/>
+  <project name="platform/external/dtc" path="external/dtc" revision="11c0b06b54e0492b7fec14aede564f0034b7b975" upstream="main" dest-branch="main"/>
+  <project name="platform/external/open-dice" path="external/open-dice" revision="8f7d92e477a4a1b9c579c41f4bde3886c2996d6a" upstream="main" dest-branch="main"/>
+  <project name="platform/external/stardoc" path="external/stardoc" revision="e83f522ee95419e55d2c5654aa6e0143beeef595" upstream="main" dest-branch="main"/>
+  <project name="platform/external/swig" path="external/swig" revision="6ffc1dbf29ba98c4d8aa71ebc9b484e973fe1030" upstream="main" dest-branch="main"/>
+  <project name="platform/external/u-boot" path="u-boot" revision="8809d460776fddaff4ef2cacbdd563893c7723f8" upstream="main" dest-branch="main">
+    <linkfile src="." dest=".source_date_epoch_dir"/>
+    <linkfile src="bazel.WORKSPACE" dest="WORKSPACE"/>
   </project>
-  <project path="prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9"
-    name="platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9"
-    clone-depth="1" revision="u-boot-mainline" />
-  <project path="prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9"
-    name="platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9"
-    clone-depth="1" revision="u-boot-mainline" />
-  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8"
-    name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8"
-    clone-depth="1" />
-  <project path="prebuilts/gcc/linux-x86/x86/x86_64-linux-android-4.9"
-    name="platform/prebuilts/gcc/linux-x86/x86/x86_64-linux-android-4.9"
-    clone-depth="1" revision="u-boot-mainline" />
-  <project path="prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" clone-depth="1" />
-  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1" />
-  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" />
-  <project path="prebuilts/jdk/jdk11" name="platform/prebuilts/jdk/jdk11" clone-depth="1" />
-  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" />
-  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" clone-depth="1" />
-  <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
+  <project name="platform/external/zlib" path="external/zlib" revision="cfa5de0e204556eb3ab7c7fde29258329cd4ebb6" upstream="main" dest-branch="main"/>
+  <project name="platform/prebuilts/bazel/linux-x86_64" path="prebuilts/bazel/linux-x86_64" revision="b2cd3cd1fe6d7ad4f6ac6a49a6bf9fb381a818a2" upstream="main" dest-branch="main" clone-depth="1"/>
+  <project name="platform/prebuilts/build-tools" path="prebuilts/build-tools" revision="8d78d898cfa8fe5f18bd38c8e92aa2f00d693558" upstream="main" dest-branch="main" clone-depth="1"/>
+  <project name="platform/prebuilts/clang/host/linux-x86" path="prebuilts/clang/host/linux-x86" revision="364c8e147968351050f730fa0a48c4eea3d6eaf1" upstream="main" dest-branch="main" clone-depth="1"/>
+  <project name="platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" path="prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" revision="dfa84be8039e99afda2a9b31fc8bb6238d4f1c62" upstream="u-boot-mainline" dest-branch="u-boot-mainline" clone-depth="1"/>
+  <project name="platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9" path="prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9" revision="3b6581a8f1fca1a0a3bf9f91d9eede6de77e414c" upstream="u-boot-mainline" dest-branch="u-boot-mainline" clone-depth="1"/>
+  <project name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" revision="6c28ba8bdf3bbcc8353a37ec6910b09d1e175434" upstream="main" dest-branch="main" clone-depth="1"/>
+  <project name="platform/prebuilts/gcc/linux-x86/x86/x86_64-linux-android-4.9" path="prebuilts/gcc/linux-x86/x86/x86_64-linux-android-4.9" revision="4142060e4a240923e0d97a4e6b8ed03f602f7fdc" upstream="u-boot-mainline" dest-branch="u-boot-mainline" clone-depth="1"/>
+  <project name="platform/prebuilts/jdk/jdk11" path="prebuilts/jdk/jdk11" revision="9fb5a401a32faf49ddf2b63762de76cb67b0d7b5" upstream="main" dest-branch="main" clone-depth="1"/>
+  <project name="platform/system/tools/mkbootimg" path="tools/mkbootimg" revision="615a1fced5f8e2755642d30357674d3bfa21b85e" upstream="main" dest-branch="main"/>
+  <project name="toolchain/prebuilts/ndk/r23" path="prebuilts/ndk-r23" revision="19ac7e4eded12adb99d4f613490dde6dd0e72664" upstream="main" dest-branch="main" clone-depth="1"/>
+  
+  <superproject name="kernel/superproject" revision="u-boot-mainline"/>
+  
+  <contactinfo bugurl="go/repo-bug"/>
 </manifest>
